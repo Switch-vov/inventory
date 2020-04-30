@@ -1,0 +1,36 @@
+#################################### common config : ####################################
+# 应用服务web访问端口
+server:
+  port: 8080
+spring:
+  application:
+    name: inventory
+  datasource:
+    url: jdbc:mysql://116.62.205.140:3306/mall
+    username: root
+    password: 123456
+  redis:
+    cluster:
+      nodes:
+        - '116.62.205.140:7000'
+        - '116.62.205.140:7001'
+        - '116.62.205.140:7002'
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.switchvov.inventory.model  # 注意：对应实体类的路径
+
+# ActuatorWeb访问端口
+management:
+  server:
+    port: 8081
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
