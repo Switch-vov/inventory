@@ -36,4 +36,12 @@ public interface InventoryCache {
      * @return Mono包裹的库存对象
      */
     Mono<Inventory> get(String productId);
+
+    /**
+     * 删除库存缓存
+     *
+     * @param productId 商品ID
+     * @return Mono包裹的删除结果
+     */
+    Mono<Boolean> delete(String productId);
 }

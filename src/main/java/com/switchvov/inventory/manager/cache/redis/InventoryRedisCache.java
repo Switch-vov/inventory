@@ -3,6 +3,8 @@ package com.switchvov.inventory.manager.cache.redis;
 import com.switchvov.inventory.common.util.JsonUtil;
 import com.switchvov.inventory.manager.cache.InventoryCache;
 import com.switchvov.inventory.model.Inventory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveValueOperations;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,8 @@ import java.time.Duration;
  */
 @Component
 public class InventoryRedisCache implements InventoryCache {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryRedisCache.class);
+
     public static final String INVENTORY_KEY_PREFIX = "mall:inventory:";
     public static final long DEFAULT_TIMEOUT = 300;
     private ReactiveRedisTemplate<String, String> template;
@@ -46,10 +50,20 @@ public class InventoryRedisCache implements InventoryCache {
     @Override
     public Mono<Inventory> get(String productId) {
         if (checkProductId(productId)) {
-            return null;
+            return Mono.empty();
         }
         String key = getKey(productId);
-        return Mono.fromCallable(() -> JsonUtil.deserialization(cache.get(key).block(), Inventory.class));
+        return cache.get(key)
+                .map(inventoryString -> JsonUtil.deserialization(inventoryString, Inventory.class));
+    }
+
+    @Override
+    public Mono<Boolean> delete(String productId) {
+        if (checkProductId(productId)) {
+            return Mono.empty();
+        }
+        String key = getKey(productId);
+        return cache.delete(key);
     }
 
     private String getKey(String productId) {

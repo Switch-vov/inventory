@@ -17,4 +17,15 @@
         FROM inventory
         ORDER BY `id` DESC
     </select>
+    <update id="update">
+        UPDATE inventory
+        SET inventory = #{inventory}
+        WHERE product_id = #{productId}
+    </update>
+    <select id="get" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM inventory
+        WHERE product_id = #{productId}
+    </select>
 </mapper>

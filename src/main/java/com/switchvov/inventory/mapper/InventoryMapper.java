@@ -15,7 +15,24 @@ import java.util.List;
 public interface InventoryMapper {
     /**
      * 获取
+     *
      * @return
      */
     List<Inventory> listAll();
+
+    /**
+     * 更新库存
+     *
+     * @param inventory 库存对象
+     * @return 更新影响条数
+     */
+    int update(Inventory inventory);
+
+    /**
+     * 获取库存对象
+     *
+     * @param productId 商品ID
+     * @return 库存对象
+     */
+    Inventory get(String productId);
 }

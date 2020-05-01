@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
  */
 public class QueueWorkerThread implements Callable<Boolean> {
     private static final Logger LOGGER = LoggerFactory.getLogger(QueueWorkerThread.class);
+    
     private RequestQueue requestQueue;
 
     public QueueWorkerThread(RequestQueue requestQueue) {
