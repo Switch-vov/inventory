@@ -34,16 +34,16 @@ public class InventoryRedisCache implements InventoryCache {
     }
 
     @Override
-    public Mono<Boolean> put(String productId, Inventory inventory) {
-        return put(productId, inventory, DEFAULT_TIMEOUT);
+    public Mono<Boolean> put(Inventory inventory) {
+        return put(inventory, DEFAULT_TIMEOUT);
     }
 
     @Override
-    public Mono<Boolean> put(String productId, Inventory inventory, long timeout) {
-        if (checkProductId(productId)) {
+    public Mono<Boolean> put(Inventory inventory, long timeout) {
+        if (checkProductId(inventory.getProductId())) {
             return Mono.empty();
         }
-        String key = getKey(productId);
+        String key = getKey(inventory.getProductId());
         return cache.set(key, JsonUtil.serialization(inventory), Duration.ofSeconds(timeout));
     }
 

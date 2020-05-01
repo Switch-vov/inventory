@@ -13,21 +13,19 @@ public interface InventoryCache {
     /**
      * 设置库存缓存
      *
-     * @param productId 商品ID
      * @param inventory 库存对象
      * @return Mono包裹的设置结果
      */
-    Mono<Boolean> put(String productId, Inventory inventory);
+    Mono<Boolean> put(Inventory inventory);
 
     /**
      * 设置库存缓存
      *
-     * @param productId 商品ID
      * @param inventory 库存对象
      * @param timeout   超时时间
      * @return Mono包裹的设置结果
      */
-    Mono<Boolean> put(String productId, Inventory inventory, long timeout);
+    Mono<Boolean> put(Inventory inventory, long timeout);
 
     /**
      * 获取库存缓存
