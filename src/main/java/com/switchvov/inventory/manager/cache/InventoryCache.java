@@ -27,6 +27,10 @@ public interface InventoryCache {
      */
     Mono<Boolean> put(Inventory inventory, long timeout);
 
+    void putImmediately(Inventory inventory);
+
+    void putImmediately(Inventory inventory, long timeout);
+
     /**
      * 获取库存缓存
      *
@@ -36,10 +40,20 @@ public interface InventoryCache {
     Mono<Inventory> get(String productId);
 
     /**
+     * 立即获取库存缓存
+     *
+     * @param productId 商品ID
+     * @return 库存对象
+     */
+    Inventory getImmediately(String productId);
+
+    /**
      * 删除库存缓存
      *
      * @param productId 商品ID
      * @return Mono包裹的删除结果
      */
     Mono<Boolean> delete(String productId);
+
+    Boolean deleteImmediately(String productId);
 }

@@ -30,7 +30,7 @@ public class RedisTests {
     @Test
     public void testRedis() {
         List<Inventory> inventories = inventoryMapper.listAll();
-        inventories.forEach(inventory -> inventoryCache.put(inventory.getProductId(), inventory).block());
+        inventories.forEach(inventory -> inventoryCache.put(inventory).block());
         List<Inventory> selectInventories = inventories.stream()
                 .map(Inventory::getProductId)
                 .map(inventoryCache::get)

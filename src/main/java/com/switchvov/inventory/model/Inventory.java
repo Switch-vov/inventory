@@ -1,6 +1,9 @@
 package com.switchvov.inventory.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -10,6 +13,9 @@ import java.util.Date;
  * @since 2020/4/30
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Inventory {
     @Id
     private Long id;

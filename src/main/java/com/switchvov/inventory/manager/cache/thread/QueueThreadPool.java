@@ -18,15 +18,15 @@ public class QueueThreadPool {
     /**
      * 线程池
      */
-    private ThreadPoolTaskExecutor executor;
+    private final ThreadPoolTaskExecutor executor;
     /**
      * 队列大小
      */
-    private int queueSize;
+    private final int queueSize;
     /**
      * 队列列表
      */
-    private List<RequestQueue> queues;
+    private final List<RequestQueue> queues;
 
     public QueueThreadPool(ThreadPoolTaskExecutor executor) {
         this(executor, DEFAULT_QUEUE_SIZE);
@@ -45,13 +45,14 @@ public class QueueThreadPool {
         int poolSize = getPoolSize();
         for (int i = 0; i < poolSize; i++) {
             RequestQueue requestQueue = new RequestQueue(i, queueSize);
+            queues.add(requestQueue);
             QueueWorkerThread workerThread = new QueueWorkerThread(requestQueue);
             executor.submit(workerThread);
         }
     }
 
     public int getPoolSize() {
-        return executor.getPoolSize();
+        return executor.getMaxPoolSize();
     }
 
     public List<RequestQueue> getQueues() {

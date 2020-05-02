@@ -1,6 +1,7 @@
 package com.switchvov.inventory.manager.cache.request.impl;
 
 import com.switchvov.inventory.manager.cache.request.Request;
+import com.switchvov.inventory.manager.cache.request.RequestType;
 import com.switchvov.inventory.model.Inventory;
 import com.switchvov.inventory.service.InventoryService;
 
@@ -13,8 +14,8 @@ import com.switchvov.inventory.service.InventoryService;
  * @since 2020/5/1
  */
 public class UpdateRequest implements Request {
-    private InventoryService inventoryService;
-    private Inventory inventory;
+    private final InventoryService inventoryService;
+    private final Inventory inventory;
 
     public UpdateRequest(InventoryService inventoryService, Inventory inventory) {
         this.inventoryService = inventoryService;
@@ -24,8 +25,29 @@ public class UpdateRequest implements Request {
     @Override
     public void process() {
         // 删除缓存，更新数据库
-        inventoryService.deleteCache(inventory.getProductId())
-                .flatMap(deleteResult -> inventoryService.update(inventory))
-                .block();
+        inventoryService.deleteImmediately(inventory.getProductId());
+        inventoryService.updateImmediately(inventory);
+    }
+
+    @Override
+    public String getRouteKey() {
+        return inventory.getProductId();
+    }
+
+    @Override
+    public RequestType getRequestType() {
+        return RequestType.UPDATE;
+    }
+
+    @Override
+    public boolean force() {
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRequest{" +
+                "inventory=" + inventory +
+                '}';
     }
 }

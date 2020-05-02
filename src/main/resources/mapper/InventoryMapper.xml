@@ -19,7 +19,7 @@
     </select>
     <update id="update">
         UPDATE inventory
-        SET inventory = #{inventory}
+        SET inventory = inventory + #{inventory}
         WHERE product_id = #{productId}
     </update>
     <select id="get" resultMap="BaseResultMap">

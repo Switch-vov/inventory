@@ -10,3 +10,6 @@ CREATE TABLE `inventory`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='库存表';
+
+INSERT INTO `inventory`(`product_id`, `inventory`)
+VALUES ('abc', 100);

@@ -18,6 +18,8 @@ public interface InventoryService {
      */
     Mono<Boolean> deleteCache(String productId);
 
+    Boolean deleteImmediately(String productId);
+
     /**
      * 更新数据库
      *
@@ -25,6 +27,8 @@ public interface InventoryService {
      * @return 更新影响条数
      */
     Mono<Integer> update(Inventory inventory);
+
+    Integer updateImmediately(Inventory inventory);
 
     /**
      * 获取库存对象
@@ -34,6 +38,8 @@ public interface InventoryService {
      */
     Mono<Inventory> get(String productId);
 
+    Inventory getImmediately(String productId);
+
     /**
      * 更新缓存
      *
@@ -41,4 +47,21 @@ public interface InventoryService {
      * @return 更新结果
      */
     Mono<Boolean> updateCache(Inventory inventory);
+
+    void updateCacheImmediately(Inventory inventory);
+
+    /**
+     * 基于缓存的库存对象获取
+     *
+     * @param productId 商品ID
+     * @return 库存对象
+     */
+    Mono<Inventory> getWithCache(String productId);
+
+    /**
+     * 基于缓存的库存更新
+     *
+     * @param inventory 库存对象
+     */
+    void updateWithCache(Inventory inventory);
 }
